@@ -22,7 +22,11 @@ export function useTables(roomSize: { width: number; height: number }) {
   type ApiTable = Omit<Table, "is-locked"> & { isLocked: boolean };
 
   useEffect(() => {
-    fetch(`${API_URL}/api/v1/tables`)
+    fetch(`${API_URL}/api/v1/tables`, {
+      headers: {
+        "X-Neptun-Code": import.meta.env.VITE_NEPTUN_CODE ?? "",
+      },
+    })
       .then((res) => res.json())
       .then((data: ApiTable[]) =>
         setTables(
